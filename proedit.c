@@ -5,7 +5,7 @@
  *do what you want with it
  */
 
-#define PROEDIT_VERSION "0.4.6"
+#define PROEDIT_VERSION "0.4.9"
 
 #define _BSD_SOURCE
 #define _GNU_SOURCE
@@ -127,7 +127,7 @@ void editorSetStatusMessage(const char *fmt, ...);
  * comments and numbers.
  *
  * The characters for single and multi line comments must be exactly two
- * and must be provided as well (see the C language example).
+ * and must be provided as well.
  *
  * There is no support to highlight patterns currently. */
 
@@ -218,7 +218,7 @@ int editorReadKey(int fd) {
     while(1) {
         switch(c) {
         case ESC:    /* escape sequence */
-            /* If this is just an ESC, we'll timeout here. */
+            /* If this is just an ESC, timeout here. */
             if (read(fd,seq,1) == 0) return ESC;
             if (read(fd,seq+1,1) == 0) return ESC;
 
@@ -307,7 +307,7 @@ int getWindowSize(int ifd, int ofd, int *rows, int *cols) {
         char seq[32];
         snprintf(seq,32,"\x1b[%d;%dH",orig_row,orig_col);
         if (write(ofd,seq,strlen(seq)) == -1) {
-            /* Can't recover... */
+            /* Can't recover... Owch... */
         }
         return 0;
     } else {
